@@ -3,7 +3,7 @@
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
  * FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
  */
-@Prefix("docker")
+@Prefix("dockerx")
 package ext.deployit.community.ci.docker;
 
 import com.xebialabs.deployit.plugin.api.udm.Prefix;

@@ -30,7 +30,7 @@ public class DockerComposeDescriptorTest {
             DockerComposeImageItem image = (DockerComposeImageItem) i;
             if (image.getName().equals("haproxy")) {
                 assertEquals("eeacms/haproxy", image.getImage());
-                assertEquals("docker.Image", image.getType());
+                assertEquals("dockerx.Image", image.getType());
                 assertEquals(2, image.getPorts().size());
                 assertEquals("80:80", image.getPorts().get(0));
                 assertEquals("1936:1936", image.getPorts().get(1));
@@ -90,7 +90,7 @@ public class DockerComposeDescriptorTest {
         assertEquals(8, images.size());
 
         final DockerComposeImageItem votingAppImage = (DockerComposeImageItem) descriptor.getItemByName("voting-app");
-        assertEquals("docker.Image", votingAppImage.getType());
+        assertEquals("dockerx.Image", votingAppImage.getType());
         assertEquals("voting-app:4", votingAppImage.getImage());
         assertEquals(1, votingAppImage.getPorts().size());
         assertEquals("5000:80", votingAppImage.getPorts().get(0));
@@ -114,12 +114,12 @@ public class DockerComposeDescriptorTest {
         assertEquals("back-tier", dbImage.getNetworks().get(0));
 
         final DockerComposeVolumeItem dbdataVolume = (DockerComposeVolumeItem) descriptor.getItemByName("db-data");
-        assertEquals("docker.Folder", dbdataVolume.getType());
+        assertEquals("dockerx.Folder", dbdataVolume.getType());
 
         final DockerComposeNetworkItem frontTierNetwork = (DockerComposeNetworkItem) descriptor.getItemByName("front-tier");
-        assertEquals("docker.NetworkSpec", frontTierNetwork.getType());
+        assertEquals("dockerx.NetworkSpec", frontTierNetwork.getType());
         final DockerComposeNetworkItem backTierNetwork = (DockerComposeNetworkItem) descriptor.getItemByName("back-tier");
-        assertEquals("docker.NetworkSpec", backTierNetwork.getType());
+        assertEquals("dockerx.NetworkSpec", backTierNetwork.getType());
 
     }
 

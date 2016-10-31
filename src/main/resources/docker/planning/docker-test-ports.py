@@ -25,6 +25,6 @@ def test_ports_on_containers(deployed):
 
 
 docker_run_containers = deployeds(
-    lambda delta: (delta.operation == "CREATE" or delta.operation == "MODIFY") and delta.deployedOrPrevious.type == "docker.RunContainer")
+    lambda delta: (delta.operation == "CREATE" or delta.operation == "MODIFY") and delta.deployedOrPrevious.type == "dockerx.RunContainer")
 
 map(test_ports_on_containers, docker_run_containers)

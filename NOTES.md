@@ -21,9 +21,9 @@ export DOCKER_CERT_PATH=/Users/bmoussaud/.docker/machine/machines/dev-machine
 export DOCKER_HOST=tcp://192.168.99.100:2376
 ```
 
-3. In XL Deploy, Create new CI `dev-machine` of type `docker.Machine` with the following properties
+3. In XL Deploy, Create new CI `dev-machine` of type `dockerx.Machine` with the following properties
    * id: Infrastructure/dev-machine/mysql-dev
-   * type: docker.Machine
+   * type: dockerx.Machine
    * Port: 2376
    * Private Key File: /Users/bmoussaud/.docker/machine/machines/dev-machine
    * username: docker
@@ -49,7 +49,7 @@ export DOCKER_HOST=tcp://192.168.99.100:2376
 
 # TODO #
 
-* docker.Volume linked with docker.DeployedFolderVolume
+* dockerx.Volume linked with docker.DeployedFolderVolume
 * Manage Volume modification -> stop / start container.
 
 # Start the Software Factory

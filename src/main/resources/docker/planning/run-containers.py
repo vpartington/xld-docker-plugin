@@ -77,7 +77,7 @@ def sort_containers(docker_run_containers):
 
 
 docker_run_containers = deployeds(
-    lambda delta: (delta.operation == "CREATE" or delta.operation == "MODIFY") and delta.deployedOrPrevious.type == "docker.RunContainer")
+    lambda delta: (delta.operation == "CREATE" or delta.operation == "MODIFY") and delta.deployedOrPrevious.type == "dockerx.RunContainer")
 
 if len(docker_run_containers) > 0:
     sorted_docker_run_containers = sort_containers(docker_run_containers)

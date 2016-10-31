@@ -19,7 +19,7 @@ import static com.google.common.collect.Sets.newHashSet;
 public class DockerComposeImageItem extends BaseDockerConfigurationItem {
 
     public DockerComposeImageItem(final String name, final Map properties) {
-        super("docker.Image", name, properties);
+        super("dockerx.Image", name, properties);
     }
 
     public String getImage() {
@@ -66,7 +66,7 @@ public class DockerComposeImageItem extends BaseDockerConfigurationItem {
             @Override
             public ConfigurationItem apply(final String s) {
                 final String id = String.format("%s/%s", imageId, toCiName(s));
-                ConfigurationItem ci = service.newCI("docker.PortSpec", id);
+                ConfigurationItem ci = service.newCI("dockerx.PortSpec", id);
                 ci.setProperty("hostPort", translateToPropertyPlaceholder(s.split(":")[0]));
                 ci.setProperty("containerPort", translateToPropertyPlaceholder(s.split(":")[1]));
                 return ci;
@@ -77,12 +77,12 @@ public class DockerComposeImageItem extends BaseDockerConfigurationItem {
             public ConfigurationItem apply(final String s) {
                 if (s.contains(":")) {
                     final String id = String.format("%s/%s", imageId, s.split(":")[0]);
-                    ConfigurationItem ci = service.newCI("docker.LinkSpec", id);
+                    ConfigurationItem ci = service.newCI("dockerx.LinkSpec", id);
                     ci.setProperty("alias", translateToPropertyPlaceholder(s.split(":")[1]));
                     return ci;
                 } else {
                     final String id = String.format("%s/%s", imageId, toCiName(s));
-                    ConfigurationItem ci = service.newCI("docker.LinkSpec", id);
+                    ConfigurationItem ci = service.newCI("dockerx.LinkSpec", id);
                     ci.setProperty("alias", translateToPropertyPlaceholder(s));
                     return ci;
                 }
@@ -92,7 +92,7 @@ public class DockerComposeImageItem extends BaseDockerConfigurationItem {
             @Override
             public ConfigurationItem apply(final Map.Entry<String, String> s) {
                 final String id = String.format("%s/%s", imageId, toCiName(s.getKey()));
-                ConfigurationItem ci = service.newCI("docker.EnvironmentVariableSpec", id);
+                ConfigurationItem ci = service.newCI("dockerx.EnvironmentVariableSpec", id);
                 ci.setProperty("value", translateToPropertyPlaceholder(s.getValue()));
                 return ci;
             }
@@ -104,7 +104,7 @@ public class DockerComposeImageItem extends BaseDockerConfigurationItem {
                     final String[] split = s.split(":");
                     String name = translateToPropertyPlaceholder(split[0].replace('/', '_'));
                     final String id = String.format("%s/%s", imageId, name);
-                    ConfigurationItem ci = service.newCI("docker.VolumeSpec", id);
+                    ConfigurationItem ci = service.newCI("dockerx.VolumeSpec", id);
                     ci.setProperty("source", translateToPropertyPlaceholder(split[0]));
                     ci.setProperty("destination", translateToPropertyPlaceholder(split[1]));
                     return ci;

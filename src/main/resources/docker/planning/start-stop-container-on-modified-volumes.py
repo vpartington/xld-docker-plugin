@@ -35,10 +35,10 @@ def containers(modify_data_volume, noop_delta_container):
     return set(candidates)
 
 
-modify_data_volume = filter(lambda delta: delta.operation == "MODIFY" and (delta.deployedOrPrevious.type == "docker.DataFileVolume" or delta.deployedOrPrevious.type == "docker.DataFolderVolume"), deltas.deltas)
+modify_data_volume = filter(lambda delta: delta.operation == "MODIFY" and (delta.deployedOrPrevious.type == "dockerx.DataFileVolume" or delta.deployedOrPrevious.type == "dockerx.DataFolderVolume"), deltas.deltas)
 print "modify_data_volume %s " % modify_data_volume
 
-noop_delta_container = filter(lambda delta: delta.operation == "NOOP" and delta.deployedOrPrevious.type == "docker.RunContainer", deltas.deltas)
+noop_delta_container = filter(lambda delta: delta.operation == "NOOP" and delta.deployedOrPrevious.type == "dockerx.RunContainer", deltas.deltas)
 print "noop_delta_container %s " % noop_delta_container
 
 candidates = containers(modify_data_volume, noop_delta_container)

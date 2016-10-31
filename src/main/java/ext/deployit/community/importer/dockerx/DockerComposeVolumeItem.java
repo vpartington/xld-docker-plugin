@@ -9,10 +9,10 @@ import java.util.Map;
 
 import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
 
-public class DockerComposeNetworkItem extends BaseDockerConfigurationItem {
+public class DockerComposeVolumeItem extends BaseDockerConfigurationItem {
 
-    public DockerComposeNetworkItem(final String name, final Map properties) {
-        super("docker.NetworkSpec", name, properties);
+    public DockerComposeVolumeItem(final String name, final Map properties) {
+        super("dockerx.Folder", name, properties);
     }
 
     @Override

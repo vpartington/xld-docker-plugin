@@ -9,22 +9,22 @@
 
 <rules xmlns="http://www.xebialabs.com/xl-deploy/xl-rules">
 
-    <rule name="docker.RunContainers.Run" scope="plan">
+    <rule name="dockerx.RunContainers.Run" scope="plan">
         <planning-script-path>docker/planning/run-containers.py</planning-script-path>
     </rule>
 
     <rule name="docker.cannot.have.network.and.links" scope="deployed">
         <conditions>
-            <type>docker.RunContainer</type>
+            <type>dockerx.RunContainer</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
         </conditions>
         <planning-script-path>docker/planning/check-container-configuration.py</planning-script-path>
     </rule>
 
-    <rule name="docker.network.deploy" scope="deployed">
+    <rule name="dockerx.Network.deploy" scope="deployed">
         <conditions>
-            <type>docker.Network</type>
+            <type>dockerx.Network</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -40,9 +40,9 @@
         </steps>
     </rule>
 
-    <rule name="docker.network.undeploy" scope="deployed">
+    <rule name="dockerx.Network.undeploy" scope="deployed">
         <conditions>
-            <type>docker.Network</type>
+            <type>dockerx.Network</type>
             <operation>DESTROY</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -61,7 +61,7 @@
 
     <rule name="docker.container.log" scope="deployed">
         <conditions>
-            <type>docker.RunContainer</type>
+            <type>dockerx.RunContainer</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
             <expression>deployed.dumpLogsAfterStartup</expression>
@@ -85,7 +85,7 @@
 
     <rule name="docker.container.is.running" scope="deployed">
         <conditions>
-            <type>docker.RunContainer</type>
+            <type>dockerx.RunContainer</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
             <expression>deployed.checkContainerIsRunning</expression>
@@ -107,13 +107,13 @@
         </steps>
     </rule>
 
-    <rule name="docker.port.test" scope="plan">
+    <rule name="dockerx.Port.test" scope="plan">
         <planning-script-path>docker/planning/docker-test-ports.py</planning-script-path>
     </rule>
 
     <rule name="docker.container.stop" scope="deployed">
         <conditions>
-            <type>docker.RunContainer</type>
+            <type>dockerx.RunContainer</type>
             <operation>DESTROY</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -132,7 +132,7 @@
 
     <rule name="docker.container.remove" scope="deployed">
         <conditions>
-            <type>docker.RunContainer</type>
+            <type>dockerx.RunContainer</type>
             <operation>DESTROY</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -151,7 +151,7 @@
 
     <rule name="docker.pull.image" scope="deployed">
         <conditions>
-            <type>docker.RunContainer</type>
+            <type>dockerx.RunContainer</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -170,7 +170,7 @@
     </rule>
     <rule name="docker.pull.image.tag" scope="deployed">
         <conditions>
-            <type>docker.RunContainer</type>
+            <type>dockerx.RunContainer</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
             <expression>deployed.registryHost is not None</expression>
@@ -189,10 +189,10 @@
 
 
     <!-- Volumes -->
-    <rule name="docker.volume.create" scope="deployed">
+    <rule name="dockerx.Volume.create" scope="deployed">
         <conditions>
-            <type>docker.DataFileVolume</type>
-            <type>docker.DataFolderVolume</type>
+            <type>dockerx.DataFileVolume</type>
+            <type>dockerx.DataFolderVolume</type>
             <operation>CREATE</operation>
         </conditions>
         <steps>
@@ -210,7 +210,7 @@
 
     <rule name="docker.cp.file" scope="deployed">
         <conditions>
-            <type>docker.DataFileVolume</type>
+            <type>dockerx.DataFileVolume</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -230,7 +230,7 @@
 
     <rule name="docker.cp.folder" scope="deployed">
         <conditions>
-            <type>docker.DataFolderVolume</type>
+            <type>dockerx.DataFolderVolume</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -248,10 +248,10 @@
         </steps>
     </rule>
 
-    <rule name="docker.volume.remove" scope="deployed">
+    <rule name="dockerx.Volume.remove" scope="deployed">
         <conditions>
-            <type>docker.DataFileVolume</type>
-            <type>docker.DataFolderVolume</type>
+            <type>dockerx.DataFileVolume</type>
+            <type>dockerx.DataFolderVolume</type>
             <operation>DESTROY</operation>
         </conditions>
         <steps>
@@ -275,7 +275,7 @@
     <!-- Docker Compose -->
     <rule name="docker.compose.up" scope="deployed">
         <conditions>
-            <type>docker.ComposedContainers</type>
+            <type>dockerx.ComposedContainers</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -295,7 +295,7 @@
 
     <rule name="docker.compose.stop" scope="deployed">
         <conditions>
-            <type>docker.ComposedContainers</type>
+            <type>dockerx.ComposedContainers</type>
             <operation>MODIFY</operation>
             <operation>DESTROY</operation>
         </conditions>
@@ -316,7 +316,7 @@
 
     <rule name="docker.compose.remove" scope="deployed">
         <conditions>
-            <type>docker.ComposedContainers</type>
+            <type>dockerx.ComposedContainers</type>
             <operation>MODIFY</operation>
             <operation>DESTROY</operation>
         </conditions>
@@ -338,7 +338,7 @@
 
     <rule name="docker.compose.logs" scope="deployed">
         <conditions>
-            <type>docker.ComposedContainers</type>
+            <type>dockerx.ComposedContainers</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
             <expression>deployed.dumpLogsAfterStartup</expression>
@@ -363,9 +363,9 @@
     <!-- / Docker Compose -->
 
     <!-- Docker Machine -->
-    <rule name="docker.DeployedDockerMachine.deploy" scope="deployed">
+    <rule name="dockerx.DeployedDockerMachine.deploy" scope="deployed">
         <conditions>
-            <type>docker.DeployedDockerMachine</type>
+            <type>dockerx.DeployedDockerMachine</type>
             <operation>CREATE</operation>
         </conditions>
         <steps>
@@ -390,7 +390,7 @@
                 <script>docker-machine/ci/create.py</script>
                 <jython-context>
                     <context_key expression="true">"data_%s" % deployed.name</context_key>
-                    <ci_type>docker.Machine</ci_type>
+                    <ci_type>dockerx.Machine</ci_type>
                     <ci_id expression="true">"/".join([deployed.container.id,deployed.machineName])</ci_id>
                     <ci_properties expression="true">{'provider': deployed.driver,'dynamicParameters':True, 'swarmMaster': False, 'tags': deployed.containerTags}
                     </ci_properties>
@@ -399,9 +399,9 @@
         </steps>
     </rule>
 
-    <rule name="docker.DeployedSwarmMachine.deploy" scope="deployed">
+    <rule name="dockerx.DeployedSwarmMachine.deploy" scope="deployed">
         <conditions>
-            <type>docker.DeployedSwarmMachine</type>
+            <type>dockerx.DeployedSwarmMachine</type>
             <operation>CREATE</operation>
         </conditions>
         <steps>
@@ -426,7 +426,7 @@
                 <order expression="true">59 if deployed.master else 60</order>
                 <jython-context>
                     <context_key expression="true">"data_%s" % deployed.name</context_key>
-                    <ci_type>docker.Machine</ci_type>
+                    <ci_type>dockerx.Machine</ci_type>
                     <ci_id expression="true">"/".join([deployed.container.id,deployed.machineName])</ci_id>
                     <ci_properties expression="true">{'provider': deployed.driver,'dynamicParameters':True, 'swarmMaster': True if deployed.master else False,
                         'tags': deployed.containerTags}
@@ -438,10 +438,10 @@
     </rule>
 
 
-    <rule name="docker.DeployedDockerMachine.deploy.repository" scope="deployed">
+    <rule name="dockerx.DeployedDockerMachine.deploy.repository" scope="deployed">
         <conditions>
-            <type>docker.DeployedDockerMachine</type>
-            <type>docker.DeployedSwarmMachine</type>
+            <type>dockerx.DeployedDockerMachine</type>
+            <type>dockerx.DeployedSwarmMachine</type>
             <operation>CREATE</operation>
             <expression>deployed.environmentId is not None</expression>
         </conditions>
@@ -467,10 +467,10 @@
         </steps>
     </rule>
 
-    <rule name="docker.DeployedDockerMachine.undeploy.repository" scope="deployed">
+    <rule name="dockerx.DeployedDockerMachine.undeploy.repository" scope="deployed">
         <conditions>
-            <type>docker.DeployedDockerMachine</type>
-            <type>docker.DeployedSwarmMachine</type>
+            <type>dockerx.DeployedDockerMachine</type>
+            <type>dockerx.DeployedSwarmMachine</type>
             <operation>DESTROY</operation>
             <expression>previousDeployed.environmentId is not None</expression>
         </conditions>
@@ -489,10 +489,10 @@
         </steps>
     </rule>
 
-    <rule name="docker.DeployedDockerMachine.undeploy" scope="deployed">
+    <rule name="dockerx.DeployedDockerMachine.undeploy" scope="deployed">
         <conditions>
-            <type>docker.DeployedDockerMachine</type>
-            <type>docker.DeployedSwarmMachine</type>
+            <type>dockerx.DeployedDockerMachine</type>
+            <type>dockerx.DeployedSwarmMachine</type>
             <operation>DESTROY</operation>
         </conditions>
         <steps>
@@ -522,7 +522,7 @@
 
     <rule name="docker.swarm.service.create" scope="deployed">
         <conditions>
-            <type>docker.SwarmService</type>
+            <type>dockerx.SwarmService</type>
             <operation>CREATE</operation>
         </conditions>
         <steps>
@@ -539,7 +539,7 @@
 
     <rule name="docker.swarm.service.delete" scope="deployed">
         <conditions>
-            <type>docker.SwarmService</type>
+            <type>dockerx.SwarmService</type>
             <operation>DESTROY</operation>
         </conditions>
         <steps>
@@ -556,7 +556,7 @@
 
     <rule name="docker.swarm.service.update" scope="deployed">
         <conditions>
-            <type>docker.SwarmService</type>
+            <type>dockerx.SwarmService</type>
             <operation>MODIFY</operation>
             <expression>deployed.rollingUpdate is False</expression>
         </conditions>
@@ -583,7 +583,7 @@
 
     <rule name="docker.swarm.service.update.planning" scope="deployed">
         <conditions>
-            <type>docker.SwarmService</type>
+            <type>dockerx.SwarmService</type>
             <operation>MODIFY</operation>
             <expression>deployed.rollingUpdate is True</expression>
         </conditions>

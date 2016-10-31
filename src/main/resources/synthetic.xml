@@ -12,7 +12,7 @@
 <synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <type type="docker.Machine" extends="generic.Container" description="A Docker Machine that can be reached from the associated Host.">
+    <type type="dockerx.Machine" extends="generic.Container" description="A Docker Machine that can be reached from the associated Host.">
         <property name="address" required="false"/>
         <property name="port" kind="integer" default="2376" required="false"/>
         <property name="certificatePath" required="false"/>
@@ -26,9 +26,8 @@
         <property name="swarmPort" kind="integer" default="3376" required="false" category="Swarm"/>
     </type>
 
-
-    <type type="docker.RunContainer" extends="udm.BaseDeployed" deployable-type="docker.Image" container-type="docker.Machine">
-        <generate-deployable type="docker.Image" extends="udm.BaseDeployable"/>
+    <type type="dockerx.RunContainer" extends="udm.BaseDeployed" deployable-type="dockerx.Image" container-type="dockerx.Machine">
+        <generate-deployable type="dockerx.Image" extends="udm.BaseDeployable"/>
         <property name="image"/>
         <property name="entryPoint" required="false"/>
         <property name="command" required="false"/>
@@ -36,13 +35,13 @@
         <property name="labels" kind="set_of_string" required="false" category="Labels"/>
         <property name="network" required="false" category="Network"/>
         <property name="publishAllExposedPorts" required="false" kind="boolean" default="false" category="Network"/>
-        <property name="ports" kind="set_of_ci" referenced-type="docker.Port" as-containment="true" required="false" category="Network"/>
-        <property name="links" kind="set_of_ci" referenced-type="docker.Link" as-containment="true" required="false" category="Network"/>
+        <property name="ports" kind="set_of_ci" referenced-type="dockerx.Port" as-containment="true" required="false" category="Network"/>
+        <property name="links" kind="set_of_ci" referenced-type="dockerx.Link" as-containment="true" required="false" category="Network"/>
         <property name="dependencies" kind="list_of_string" required="false" category="Deployment"
                   description="list of containers that should be created or started before."/>
-        <property name="volumes" kind="set_of_ci" referenced-type="docker.Volume" as-containment="true" required="false" category="Volumes"/>
+        <property name="volumes" kind="set_of_ci" referenced-type="dockerx.Volume" as-containment="true" required="false" category="Volumes"/>
         <property name="volumesFrom" kind="set_of_string" required="false" category="Volumes"/>
-        <property name="variables" kind="set_of_ci" referenced-type="docker.EnvironmentVariable" as-containment="true" required="false" category="Variables"/>
+        <property name="variables" kind="set_of_ci" referenced-type="dockerx.EnvironmentVariable" as-containment="true" required="false" category="Variables"/>
         <property name="extendedPrivileges" kind="boolean" required="false" default="false" category="Advanced"/>
         <property name="memory" required="false" category="Advanced"/>
         <property name="pidNamespace" label="PID namespace to use" required="false" category="Advanced"/>
@@ -62,16 +61,16 @@
         <property name="logDriver" required="false" category="Log" description="Logging driver for container "/>
     </type>
 
-    <type-modification type="docker.Image">
-        <property name="ports" kind="set_of_ci" referenced-type="docker.PortSpec" as-containment="true" required="false" category="Network"/>
-        <property name="links" kind="set_of_ci" referenced-type="docker.LinkSpec" as-containment="true" required="false" category="Network"/>
-        <property name="volumes" kind="set_of_ci" referenced-type="docker.VolumeSpec" as-containment="true" required="false" category="Volumes"/>
-        <property name="variables" kind="set_of_ci" referenced-type="docker.EnvironmentVariableSpec" as-containment="true" required="false"
+    <type-modification type="dockerx.Image">
+        <property name="ports" kind="set_of_ci" referenced-type="dockerx.PortSpec" as-containment="true" required="false" category="Network"/>
+        <property name="links" kind="set_of_ci" referenced-type="dockerx.LinkSpec" as-containment="true" required="false" category="Network"/>
+        <property name="volumes" kind="set_of_ci" referenced-type="dockerx.VolumeSpec" as-containment="true" required="false" category="Volumes"/>
+        <property name="variables" kind="set_of_ci" referenced-type="dockerx.EnvironmentVariableSpec" as-containment="true" required="false"
                   category="Variables"/>
     </type-modification>
 
-    <type type="docker.Volume" deployable-type="docker.VolumeSpec" container-type="docker.RunContainer" extends="udm.BaseEmbeddedDeployed">
-        <generate-deployable type="docker.VolumeSpec" extends="udm.BaseEmbeddedDeployable"/>
+    <type type="dockerx.Volume" deployable-type="dockerx.VolumeSpec" container-type="dockerx.RunContainer" extends="udm.BaseEmbeddedDeployed">
+        <generate-deployable type="dockerx.VolumeSpec" extends="udm.BaseEmbeddedDeployable"/>
         <property name="source" description="location on the host"/>
         <property name="destination" description="location inside the container"/>
         <property name="mode" default="rw" description="mount mode rw/ro">
@@ -80,67 +79,67 @@
         </property>
     </type>
 
-    <type type="docker.Link" deployable-type="docker.LinkSpec" container-type="docker.RunContainer" extends="udm.BaseEmbeddedDeployed">
-        <generate-deployable type="docker.LinkSpec" extends="udm.BaseEmbeddedDeployable"/>
+    <type type="dockerx.Link" deployable-type="dockerx.LinkSpec" container-type="dockerx.RunContainer" extends="udm.BaseEmbeddedDeployed">
+        <generate-deployable type="dockerx.LinkSpec" extends="udm.BaseEmbeddedDeployable"/>
         <property name="alias" required="false"/>
     </type>
 
-    <type type="docker.Port" deployable-type="docker.PortSpec" container-type="docker.RunContainer" extends="udm.BaseEmbeddedDeployed">
-        <generate-deployable type="docker.PortSpec" extends="udm.BaseEmbeddedDeployable"/>
+    <type type="dockerx.Port" deployable-type="dockerx.PortSpec" container-type="dockerx.RunContainer" extends="udm.BaseEmbeddedDeployed">
+        <generate-deployable type="dockerx.PortSpec" extends="udm.BaseEmbeddedDeployable"/>
         <property name="hostPort" required="false" kind="integer"/>
         <property name="containerPort" kind="integer"/>
         <property name="protocol" default="tcp" required="false" description="e.g udp or tcp"/>
         <property name="testPort" kind="boolean" category="Advanced" default="false" required="false" description="Test if the port is open once the container has been started."/>
     </type>
 
-    <type type="docker.EnvironmentVariable" deployable-type="docker.EnvironmentVariableSpec" container-type="docker.RunContainer"
+    <type type="dockerx.EnvironmentVariable" deployable-type="dockerx.EnvironmentVariableSpec" container-type="dockerx.RunContainer"
           extends="udm.BaseEmbeddedDeployed">
-        <generate-deployable type="docker.EnvironmentVariableSpec" extends="udm.BaseEmbeddedDeployable"/>
+        <generate-deployable type="dockerx.EnvironmentVariableSpec" extends="udm.BaseEmbeddedDeployable"/>
         <property name="value"/>
         <property name="separator" default="=" category="Advanced"
                   description="most of the time, it is '=' but something it can be ':' e.g. constraint:storage==ssd"/>
     </type>
 
-    <type type="docker.DataFolderVolume" extends="udm.BaseDeployedArtifact" deployable-type="docker.Folder" container-type="docker.Machine">
-        <generate-deployable type="docker.Folder" extends="udm.BaseDeployableFolderArtifact"/>
+    <type type="dockerx.DataFolderVolume" extends="udm.BaseDeployedArtifact" deployable-type="dockerx.Folder" container-type="dockerx.Machine">
+        <generate-deployable type="dockerx.Folder" extends="udm.BaseDeployableFolderArtifact"/>
         <property name="volumeName"/>
         <property name="containerName"/>
         <property name="containerPath"/>
     </type>
 
-    <type type="docker.DataFileVolume" extends="udm.BaseDeployedArtifact" deployable-type="docker.File" container-type="docker.Machine">
-        <generate-deployable type="docker.File" extends="udm.BaseDeployableFileArtifact"/>
+    <type type="dockerx.DataFileVolume" extends="udm.BaseDeployedArtifact" deployable-type="dockerx.File" container-type="dockerx.Machine">
+        <generate-deployable type="dockerx.File" extends="udm.BaseDeployableFileArtifact"/>
         <property name="volumeName"/>
         <property name="containerName"/>
         <property name="containerPath"/>
     </type>
 
-    <type type="docker.ComposedContainers" extends="udm.BaseDeployedArtifact" deployable-type="docker.ComposeFile" container-type="docker.Machine">
-        <generate-deployable type="docker.ComposeFile" extends="udm.BaseDeployableFileArtifact"/>
+    <type type="dockerx.ComposedContainers" extends="udm.BaseDeployedArtifact" deployable-type="dockerx.ComposeFile" container-type="dockerx.Machine">
+        <generate-deployable type="dockerx.ComposeFile" extends="udm.BaseDeployableFileArtifact"/>
         <property name="forceRecreate" kind="boolean" default="false" required="false" category="Advanced"/>
         <property name="dumpLogsAfterStartup" kind="boolean" default="false" description="Generate a step to dump log after start up the container"
                   category="Advanced"/>
     </type>
 
-    <type-modification type="docker.ComposeFile">
+    <type-modification type="dockerx.ComposeFile">
         <property name="scanPlaceholders" default="true" kind="boolean"/>
         <property name="textFileNamesRegex" default=".+\.(yml | yaml)" hidden="true"/>
     </type-modification>
 
 
-    <type type="docker.Network" extends="udm.BaseDeployed" deployable-type="docker.NetworkSpec" container-type="docker.Machine">
-        <generate-deployable type="docker.NetworkSpec" extends="udm.BaseDeployable"/>
+    <type type="dockerx.Network" extends="udm.BaseDeployed" deployable-type="dockerx.NetworkSpec" container-type="dockerx.Machine">
+        <generate-deployable type="dockerx.NetworkSpec" extends="udm.BaseDeployable"/>
         <property name="driver"/>
     </type>
 
 
     <!-- Docker Swarm Service -->
-    <type type="docker.SwarmNode" extends="docker.Machine">
+    <type type="dockerx.SwarmNode" extends="dockerx.Machine">
         <property name="swarmManager" default="true" kind="boolean" required="false" category="Swarm" description="else it is a worker"/>
     </type>
 
-    <type type="docker.SwarmService" extends="udm.BaseDeployed" deployable-type="docker.SwarmServiceSpec" container-type="docker.SwarmNode">
-        <generate-deployable type="docker.SwarmServiceSpec" extends="udm.BaseDeployable"/>
+    <type type="dockerx.SwarmService" extends="udm.BaseDeployed" deployable-type="dockerx.SwarmServiceSpec" container-type="dockerx.SwarmNode">
+        <generate-deployable type="dockerx.SwarmServiceSpec" extends="udm.BaseDeployable"/>
         <property name="image"/>
         <property name="replicas" kind="integer" description="Number of tasks"/>
         <property name="rollingUpdate" kind="boolean" category="Advanced" default="true" required="false" description="use a rolling update if there are modications"/>
@@ -150,9 +149,9 @@
         <property name="args" required="false"/>
         <property name="labels" kind="set_of_string" required="false" category="Labels"/>
         <property name="network" required="false" category="Network"/>
-        <property name="ports" kind="set_of_ci" referenced-type="docker.SwarmServicePort" as-containment="true" required="false" category="Network"/>
+        <property name="ports" kind="set_of_ci" referenced-type="dockerx.SwarmServicePort" as-containment="true" required="false" category="Network"/>
         <property name="dependencies" kind="list_of_string" required="false" category="Deployment" description="list of containers that should be created or started before."/>
-        <property name="variables" kind="set_of_ci" referenced-type="docker.SwarmEnvironmentVariable" as-containment="true" required="false" category="Variables"/>
+        <property name="variables" kind="set_of_ci" referenced-type="dockerx.SwarmEnvironmentVariable" as-containment="true" required="false" category="Variables"/>
         <property name="limitMemory" required="false" category="Advanced"/>
         <property name="reserveMemory" required="false" category="Advanced"/>
         <property name="workDirectory" required="false" kind="boolean" default="false" category="Advanced"/>
@@ -167,22 +166,22 @@
     </type>
 
 
-    <type-modification type="docker.SwarmServiceSpec">
-        <property name="ports" kind="set_of_ci" referenced-type="docker.SwarmServicePortSpec" as-containment="true" required="false" category="Network"/>
-        <property name="variables" kind="set_of_ci" referenced-type="docker.SwarmEnvironmentVariableSpec" as-containment="true" required="false" category="Variables"/>
+    <type-modification type="dockerx.SwarmServiceSpec">
+        <property name="ports" kind="set_of_ci" referenced-type="dockerx.SwarmServicePortSpec" as-containment="true" required="false" category="Network"/>
+        <property name="variables" kind="set_of_ci" referenced-type="dockerx.SwarmEnvironmentVariableSpec" as-containment="true" required="false" category="Variables"/>
     </type-modification>
 
-    <type type="docker.SwarmServicePort" deployable-type="docker.SwarmServicePortSpec" container-type="docker.SwarmService" extends="udm.BaseEmbeddedDeployed">
-        <generate-deployable type="docker.SwarmServicePortSpec" extends="udm.BaseEmbeddedDeployable"/>
+    <type type="dockerx.SwarmServicePort" deployable-type="dockerx.SwarmServicePortSpec" container-type="dockerx.SwarmService" extends="udm.BaseEmbeddedDeployed">
+        <generate-deployable type="dockerx.SwarmServicePortSpec" extends="udm.BaseEmbeddedDeployable"/>
         <property name="hostPort" required="false" kind="integer"/>
         <property name="containerPort" kind="integer"/>
         <property name="protocol" default="tcp" required="false" description="e.g udp or tcp"/>
         <property name="testPort" kind="boolean" category="Advanced" default="false" required="false" description="Test if the port is open once the container has been started."/>
     </type>
 
-    <type type="docker.SwarmEnvironmentVariable" deployable-type="docker.SwarmEnvironmentVariableSpec" container-type="docker.SwarmService"
+    <type type="dockerx.SwarmEnvironmentVariable" deployable-type="dockerx.SwarmEnvironmentVariableSpec" container-type="dockerx.SwarmService"
           extends="udm.BaseEmbeddedDeployed">
-        <generate-deployable type="docker.SwarmEnvironmentVariableSpec" extends="udm.BaseEmbeddedDeployable"/>
+        <generate-deployable type="dockerx.SwarmEnvironmentVariableSpec" extends="udm.BaseEmbeddedDeployable"/>
         <property name="value"/>
         <property name="separator" default="=" category="Advanced"
                   description="most of the time, it is '=' but something it can be ':' e.g. constraint:storage==ssd"/>
@@ -203,8 +202,8 @@
     <!-- /MySQL Database -->
 
     <!-- Provisioning -->
-    <type type="docker.DeployedDockerMachine" extends="udm.BaseDeployed" container-type="overthere.Host" deployable-type="docker.MachineSpec">
-        <generate-deployable type="docker.MachineSpec" extends="udm.BaseDeployable"/>
+    <type type="dockerx.DeployedDockerMachine" extends="udm.BaseDeployed" container-type="overthere.Host" deployable-type="dockerx.MachineSpec">
+        <generate-deployable type="dockerx.MachineSpec" extends="udm.BaseDeployable"/>
         <property name="driver" default="virtualbox" description="Driver to create machine with."/>
         <property name="insecureRegistries" kind="list_of_string" required="false" description="insecure registries to allow with the created engine"/>
         <property name="engineOptions" kind="set_of_string" required="false" category="Engine"
@@ -216,7 +215,7 @@
         <property name="containerTags" required="false" kind="set_of_string" category="Provisioning" description="Deployment tags on the created ci"/>
     </type>
 
-    <type type="docker.DeployedSwarmMachine" extends="udm.BaseDeployed" container-type="overthere.Host" deployable-type="docker.SwarmMachineSpec">
+    <type type="dockerx.DeployedSwarmMachine" extends="udm.BaseDeployed" container-type="overthere.Host" deployable-type="docker.SwarmMachineSpec">
         <generate-deployable type="docker.SwarmMachineSpec" extends="udm.BaseDeployable"/>
         <property name="driver" default="virtualbox" description="Driver to create machine with."/>
         <property name="master" kind="boolean" default="false" required="false"/>
@@ -236,7 +235,7 @@
     <!-- /Provisioning -->
 
 
-    <type-modification type="docker.DockerMachineDictionary">
+    <type-modification type="dockerx.DockerMachineDictionary">
         <method name="loadDockerMachines" label="Load the Docker Machines:w " delegate="jythonScript"
                 script="docker/load-docker-machine-in-dictionary.py">
         </method>
